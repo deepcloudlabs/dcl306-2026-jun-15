@@ -38,7 +38,7 @@ async function app(){
         get_ticker("ETHBTC"),
         get_ticker("GENIUSTRY")]
     );
-    tickers.sort((t1,t2)=>t1.symbol.localeCompare(t2.symbol));
+    //tickers.sort((t1,t2)=>t1.symbol.localeCompare(t2.symbol));
     return tickers;
 }
 
