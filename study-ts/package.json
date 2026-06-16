@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/exercise01.ts"
+    "dev": "tsx watch src/exercise01.ts",
+    "algotrading-dev": "tsx watch src/algotrading.ts"
   },
   "keywords": [],
   "author": "",
