@@ -11,8 +11,8 @@ export default function Badge({ isVisible, label, color, value }: BadgeProps): J
   if (!isVisible) return null;
 
   return (
-    <h4>
+    <h5>
       {label}: <span className={`badge ${color}`}>{value}</span>
-    </h4>
+    </h5>
   );
 }
