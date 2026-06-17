@@ -1,4 +1,5 @@
 import {type ChangeEventHandler, Component} from "react";
+import LotteryTableHeader from "./components/lottery/LotteryTableHeader.tsx";
 
 type State = {
     lotteryNumbers: number[][],
@@ -105,14 +106,7 @@ export default class App extends Component<object, State> {
                         onClick={this.reset}>Reset
                 </button>
                 <table border={1} id={"lottery"}>
-                    <thead>
-                    <tr>{
-                        [1, 2, 3, 4, 5, 6].map(rowNo => (
-                            <th key={rowNo}>Number #{rowNo}</th>
-                        ))
-                    }
-                    </tr>
-                    </thead>
+                   <LotteryTableHeader columns={1+1+4}/>
                     <tbody>
                     {
                         this.state.lotteryNumbers.map((numbers, i) => (
