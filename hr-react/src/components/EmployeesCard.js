@@ -31,20 +31,20 @@ export default function EmployeesCard() {
     const tableRows = useMemo(() => {
         console.log("Rendering rows...");
         return employees.map((employee, index) => (
-                <tr key={employee.identity}
+                <tr key={employee.identityNo}
                     onClick={(_) => copyRow(employee)}>
                     <td>{index + 1}</td>
                     <td><Photo readOnly={true} value={'data:image/jpeg;base64,'.concat(employee.photo)}/></td>
-                    <td>{employee.identity}</td>
+                    <td>{employee.identityNo}</td>
                     <td>{employee.fullname}</td>
                     <td>{employee.salary}</td>
                     <td>{employee.iban}</td>
-                    <td>{employee.birth_year}</td>
+                    <td>{employee.birthYear}</td>
                     <td><Badge color={"bg-warning"} displayOnly={true} value={employee.department}/></td>
                     <td><Badge color={"bg-primary"} displayOnly={true}
                                value={employee.fulltime ? 'FULL-TIME' : 'PART-TIME'}/></td>
                     <td><Button color={"btn-danger"}
-                                click={() => fireEmployeeAtRow(employee.identity)}
+                                click={() => fireEmployeeAtRow(employee.identityNo)}
                                 label={"Fire Employee"}/></td>
                 </tr>
             )
@@ -93,7 +93,7 @@ export default function EmployeesCard() {
                 <tr>
                     <th>No</th>
                     <th>Photo</th>
-                    <th>Identity</th>
+                    <th>Identity No</th>
                     <th>Full Name</th>
                     <th><Button color={"btn-success"}
                                 click={() => sortBy("salary")}

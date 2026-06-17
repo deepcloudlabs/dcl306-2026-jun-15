@@ -31,11 +31,11 @@ export default function HrReducer(state, action) {
             alert(`Employee is hired: ${action.value}`);
             break;
         case ActionTypes.ON_EMPLOYEE_FIRED:
-            alert(`Employee is fired: ${action.value.identity}`);
+            alert(`Employee is fired: ${action.value.identityNo}`);
             return {...state, employee: action.value};
         case ActionTypes.ON_EMPLOYEE_FIRED_ON_ROW:
-            alert(`Employee is fired: ${action.value.identity}`);
-            let employees = state.employees.filter(emp => emp.identity !== action.value.identity);
+            alert(`Employee is fired: ${action.value.identityNo}`);
+            let employees = state.employees.filter(emp => emp.identity !== action.value.identityNo);
             return {...state, employee: action.value, employees};
         case ActionTypes.ON_EMPLOYEE_UPDATED:
             alert(`Employee is updated: ${action.value}`);
@@ -63,7 +63,7 @@ export default function HrReducer(state, action) {
         case ActionTypes.ON_ROW_CLICKED:
             return {...state, employee: action.value}
         default:
-            throw Error("No such action type is available!");
+
     }
     return {...state}; // shallow
 }

@@ -4,7 +4,7 @@ import utils from "./utils";
 import express from "express";
 import bodyParser from "body-parser";
 
-const port = 4001;
+const port = 7001;
 const app = express();
 
 app.use(bodyParser.json({limit: '5mb'}))
@@ -82,7 +82,7 @@ const Employee = mongoose.model('employees', employeeSchema);
 
 // REST API
 // http://localhost:4001/employees?page=1&size=1
-app.get('/employees', (req, res) => {
+app.get('/hr/api/v1/employees', (req, res) => {
     let page = Number(req.query.page) || 1;
     let size = Number(req.query.size) || 10;
     let offset = (page - 1) * size;
@@ -96,7 +96,7 @@ app.get('/employees', (req, res) => {
 });
 
 // GET http://localhost:4001/employees/1
-app.get('/employees/:identityNo', (req, res) => {
+app.get('/hr/api/v1/employees/:identityNo', (req, res) => {
     let identityNo = req.params.identityNo;
     Employee.findOne({'identityNo': identityNo},
         {"__v": false, "_id": false},
@@ -111,7 +111,7 @@ app.get('/employees/:identityNo', (req, res) => {
         });
 });
 
-app.post("/employees", (req, res) => {
+app.post("/hr/api/v1/employees", (req, res) => {
     let emp = req.body;
     emp._id = mongoose.Types.ObjectId();
     let employee = new Employee(emp);
@@ -128,7 +128,7 @@ app.post("/employees", (req, res) => {
 });
 
 // DELETE http://localhost:4001/employees/1
-app.delete('/employees/:identityNo', (req, res) => {
+app.delete('/hr/api/v1/employees/:identityNo', (req, res) => {
     let identityNo = req.params.identityNo;
     Employee.findOneAndDelete({'identityNo': identityNo},
         function (err, employee) {
@@ -142,8 +142,9 @@ app.delete('/employees/:identityNo', (req, res) => {
         });
 });
 
-app.put("/employees", (req, res) => {
+app.put("/hr/api/v1/employees/:identityNo", (req, res) => {
     let emp = req.body;
+    let identityNo = req.params.identityNo;
     let updatableFields = [
         "fullname", "salary", "photo",
         "fulltime", "iban", "department"

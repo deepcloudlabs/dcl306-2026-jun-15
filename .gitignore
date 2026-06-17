@@ -148,3 +148,5 @@ study-js/package-lock.json
 /binance-websocket/.idea
 /hr-backend/.idea
 /hr-react/.idea
+/jwt-backend/.idea
+/jwt-frontend/.idea
