@@ -14,7 +14,10 @@ export default class App extends Component<object, State> {
     constructor(props: object) {
         super(props);
         this.state = {
-            lotteryNumbers: [],
+            lotteryNumbers: [
+                [4,8,15,16,23,42],
+                [10,20,30,40,50,60]
+            ],
             n: 42
         };
         console.log(`Constructor: ${this.state.n}`);
@@ -48,6 +51,7 @@ export default class App extends Component<object, State> {
     }
 
     draw = () => {}
+
     reset = () => {}
 
     render() {
@@ -63,6 +67,27 @@ export default class App extends Component<object, State> {
                         onClick={this.draw}>Draw</button>
                 <button id={"reset"}
                         onClick={this.reset} >Reset</button>
+                <table border={1} id={"lottery"}>
+                    <thead>
+                    <tr>{
+                        [1,2,3,4,5,6].map( rowNo => (
+                         <th key={rowNo}>Number #{rowNo}</th>
+                        ))
+                    }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                       this.state.lotteryNumbers.map( (numbers, i) => (
+                           <tr key={i}>
+                               {numbers.map( (number) => (
+                                   <td key={number}>{number}</td>
+                               ))}
+                           </tr>
+                       ))
+                    }
+                    </tbody>
+                </table>
             </>
         );
     }
