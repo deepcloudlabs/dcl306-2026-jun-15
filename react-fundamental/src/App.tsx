@@ -1,5 +1,7 @@
 import {type ChangeEventHandler, Component} from "react";
-import LotteryTableHeader from "./components/lottery/LotteryTableHeader.tsx";
+import LotteryTable from "./components/lottery/LotteryTable.tsx";
+import InputNumber from "./components/common/InputNumber.tsx";
+import Button from "./components/common/Button.tsx";
 
 type State = {
     lotteryNumbers: number[][],
@@ -19,7 +21,7 @@ export default class App extends Component<object, State> {
                 [4, 8, 15, 16, 23, 42],
                 [10, 20, 30, 40, 50, 60]
             ],
-            n: 42
+            n: 1
         };
         console.log(`Constructor: ${this.state.n}`);
     }
@@ -40,7 +42,7 @@ export default class App extends Component<object, State> {
             this.setState({
                 n: this.state.n + 1
             });
-        }, 3_000)
+        }, 30_000)
         console.log(`Component mounted!`);
     }
 
@@ -93,32 +95,10 @@ export default class App extends Component<object, State> {
     render() {
         return (
             <>
-                <label htmlFor={"n"}>Rows: </label>
-                <input type={"number"}
-                       id={"n"}
-                       name={"n"}
-                       onChange={this.handleChange}
-                       value={this.state.n}/>
-                <button id={"draw"}
-                        onClick={this.draw}>Draw
-                </button>
-                <button id={"reset"}
-                        onClick={this.reset}>Reset
-                </button>
-                <table border={1} id={"lottery"}>
-                   <LotteryTableHeader columns={1+1+4}/>
-                    <tbody>
-                    {
-                        this.state.lotteryNumbers.map((numbers, i) => (
-                            <tr key={i}>
-                                {numbers.map((number) => (
-                                    <td key={number}>{number}</td>
-                                ))}
-                            </tr>
-                        ))
-                    }
-                    </tbody>
-                </table>
+                <InputNumber value={this.state.n} onChange={this.handleChange} label={"Row"} name={"n"}/>
+                <Button id={"draw"} onClick={this.draw} label={"Draw"}/>
+                <Button id={"reset"} color={"btn-danger"} onClick={this.reset} label={"Reset"}/>
+                <LotteryTable lotteryNumbers={this.state.lotteryNumbers} />
             </>
         );
     }
