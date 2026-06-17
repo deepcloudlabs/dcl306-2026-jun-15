@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect} from "react";
+import {type ChangeEventHandler, useEffect} from "react";
 import ProgressBar from "./components/common/ProgressBar.tsx";
 
 type Move = {
@@ -34,6 +34,7 @@ function MastermindApp() {
     const [moves, setMoves] = React.useState<Move[]>([]);
     const [maxMoves, setMaxMoves] = React.useState<number>(10);
     const [secret, setSecret] = React.useState<number>(initialSecret);
+    const [guess, setGuess] = React.useState<number>(123);
 
     useEffect(() => {
         const timerId = setInterval(() => {
@@ -43,6 +44,15 @@ function MastermindApp() {
             clearInterval(timerId);
         };
     })
+
+    const handleChange : ChangeEventHandler<HTMLInputElement> = (e) => {
+        setGuess(Number(e.target.value));
+    };
+
+    const play = () => {
+            
+    };
+
     return (
         <div className="container py-4">
             <div className="card">
@@ -74,8 +84,16 @@ function MastermindApp() {
                         out of <div className="badge bg-danger">{maxMoves}</div>
                     </div>
                     <div className="form-group mb-3">
-                        <label>Guess: </label>
-
+                        <label className={"form-label"}
+                               htmlFor={"guess"}>Guess: </label>
+                        <input type={"text"}
+                               className={"form-control"}
+                               id={"guess"}
+                               name={"guess"}
+                               value={guess}
+                               onChange={handleChange} />
+                        <button className={"btn btn-success"}
+                                onClick={play}>Play</button>
                     </div>
 
                 </div>
