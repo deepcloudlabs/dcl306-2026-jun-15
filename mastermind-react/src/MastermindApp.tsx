@@ -1,5 +1,5 @@
 import * as React from "react";
-import {type ChangeEventHandler, useEffect} from "react";
+import {type ChangeEventHandler, type MouseEventHandler, useEffect} from "react";
 import ProgressBar from "./components/common/ProgressBar.tsx";
 
 type Move = {
@@ -8,6 +8,42 @@ type Move = {
     perfectMatch: number;
     partialMatch: number;
 };
+
+function evaluateMove(guess: number, secret: number): Move {
+    const guessAsString = guess.toString();
+    const secretAsString = secret.toString();
+    let perfectMatch = 0;
+    let partialMatch = 0;
+    for (let i = 0; i < guessAsString.length; i++) {
+        const g = guessAsString.charAt(i);
+        for (let j = 0; j < secretAsString.length; j++) {
+            const s = secretAsString.charAt(j);
+            if (s === g) {
+                if (i === j) {
+                    perfectMatch++;
+                } else {
+                    partialMatch++;
+                }
+            }
+        }
+    }
+    let evaluation = "";
+    if (perfectMatch === 0 && partialMatch === 0) {
+        evaluation = "No match"!
+    }
+    if (partialMatch > 0) {
+        evaluation = `-${partialMatch}`;
+    }
+    if (perfectMatch > 0) {
+        evaluation = `${evaluation}+${perfectMatch}`;
+    }
+    return {
+        "perfectMatch": perfectMatch,
+        "partialMatch": partialMatch,
+        "evaluation": evaluation,
+        "guess": guess
+    }
+}
 
 function createDigit(min: number = 0, max: number = 9) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -45,12 +81,17 @@ function MastermindApp() {
         };
     })
 
-    const handleChange : ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setGuess(Number(e.target.value));
     };
 
-    const play = () => {
-            
+    const play: MouseEventHandler<HTMLButtonElement> = () => {
+        if (guess === secret) {
+            //TODO: next game level
+        } else {
+            const move = evaluateMove(guess, secret);
+            setMoves(prevMoves => [...prevMoves, move]);
+        }
     };
 
     return (
@@ -91,14 +132,42 @@ function MastermindApp() {
                                id={"guess"}
                                name={"guess"}
                                value={guess}
-                               onChange={handleChange} />
+                               onChange={handleChange}/>
                         <button className={"btn btn-success"}
-                                onClick={play}>Play</button>
+                                onClick={play}>Play
+                        </button>
                     </div>
-
                 </div>
             </div>
-
+            <div className="card">
+                <div className="card-header">
+                    <h3 className="card-title">Moves</h3>
+                </div>
+                <div className="card-body">
+                    <table className="table table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Guess</th>
+                                <th>Evaluation</th>
+                                <th>Perfect Match</th>
+                                <th>Partial Match</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            moves.map((move: Move,index) => (
+                                <tr key={index}>
+                                    <td>{move.guess}</td>
+                                    <td>{move.evaluation}</td>
+                                    <td>+{move.perfectMatch}</td>
+                                    <td>-{move.partialMatch}</td>
+                                </tr>
+                            ))
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     )
 }
