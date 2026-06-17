@@ -9,6 +9,23 @@ type Move = {
     partialMatch: number;
 };
 
+function createDigit(min: number = 0, max: number = 9) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function createSecret(level: number): number {
+    const digits = [createDigit(1)];
+    while (digits.length < level) {
+        const digit = createDigit();
+        if (!digits.includes(digit)) {
+            digits.push(digit);
+        }
+    }
+    return Number(digits.join(""));
+}
+
+const initialSecret = createSecret(3);
+
 function MastermindApp() {
     const [gameLevel, setGameLevel] = React.useState<number>(3);
     const [lives, setLives] = React.useState<number>(3);
@@ -16,9 +33,10 @@ function MastermindApp() {
     const [maxCount, setMaxCount] = React.useState<number>(60);
     const [moves, setMoves] = React.useState<Move[]>([]);
     const [maxMoves, setMaxMoves] = React.useState<number>(10);
+    const [secret, setSecret] = React.useState<number>(initialSecret);
 
-    useEffect(()=>{
-        const timerId = setInterval(()=>{
+    useEffect(() => {
+        const timerId = setInterval(() => {
             setCounter(prevCounter => prevCounter - 1);
         }, 1_000);
         return () => {
@@ -52,7 +70,8 @@ function MastermindApp() {
                     </div>
                     <div className="form-group mb-3">
                         <label>Moves: </label>
-                        <div className="badge bg-success">{moves.length}</div> out of <div className="badge bg-danger">{maxMoves}</div>
+                        <div className="badge bg-success">{moves.length}</div>
+                        out of <div className="badge bg-danger">{maxMoves}</div>
                     </div>
                     <div className="form-group mb-3">
                         <label>Guess: </label>
