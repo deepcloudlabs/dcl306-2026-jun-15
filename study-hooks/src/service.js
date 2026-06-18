@@ -20,3 +20,8 @@ export function saveLike(nextLiked) {
         }, 5_000);
     })
 }
+
+export const PRODUCTS = Array.from({ length: 200_000 }, (_, index) => ({
+    id: index + 1,
+    name: `Product ${index + 1}`,
+}));

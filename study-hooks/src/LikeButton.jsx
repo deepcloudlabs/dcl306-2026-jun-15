@@ -9,6 +9,7 @@ export default function LikeButton() {
     function handleClick() {
         const nextLiked = !optimisticLiked;
 
+        // non-urgent updates go to startTransition
         startTransition(async () => {
             setOptimisticLiked(nextLiked);
             console.log("sending the request to the backend!");
