@@ -1,5 +1,5 @@
-import {useMemo, useState, useTransition} from "react";
-import {PRODUCTS} from "./service.js";
+import { useMemo, useState, useTransition } from "react";
+import { PRODUCTS } from "./service.js";
 
 export default function StudyUseTransition() {
     const [inputValue, setInputValue] = useState("123");
@@ -7,19 +7,28 @@ export default function StudyUseTransition() {
 
     const [isPending, startTransition] = useTransition();
 
-    const filteredProducts = PRODUCTS.filter((product) =>
-        product.name.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredProducts = useMemo(() => {
+        const normalizedSearchText = searchText.trim().toLowerCase();
 
+        if (!normalizedSearchText) {
+            return PRODUCTS;
+        }
 
-    const handleChange = (event) =>{
+        return PRODUCTS.filter((product) =>
+            product.name.toLowerCase().includes(normalizedSearchText)
+        );
+    }, [searchText]);
+
+    function handleChange(event) {
         const nextValue = event.target.value;
 
         setInputValue(nextValue);
 
         startTransition(() => {
-                setSearchText(nextValue);
+            setSearchText(nextValue);
         });
     }
+
     return (
         <div>
             <h2>Product Search</h2>
@@ -28,14 +37,16 @@ export default function StudyUseTransition() {
                 value={inputValue}
                 onChange={handleChange}
                 placeholder="Search products..."
+                aria-label="Search products"
             />
+
             {isPending && <p>Updating list...</p>}
-            {!isPending &&
-            <ul>
+
+            <ul aria-busy={isPending}>
                 {filteredProducts.map((product) => (
                     <li key={product.id}>{product.name}</li>
                 ))}
-            </ul>}
+            </ul>
         </div>
-    )
+    );
 }
