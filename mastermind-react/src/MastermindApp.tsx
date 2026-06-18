@@ -14,6 +14,7 @@ import Badge from "./components/common/Badge.tsx";
 const initialSecret = createSecret(3);
 
 function MastermindApp() {
+
     const [gameLevel, setGameLevel] = React.useState<number>(3);
     const [lives, setLives] = React.useState<number>(3);
     const [counter, setCounter] = React.useState<number>(60);
@@ -32,6 +33,7 @@ function MastermindApp() {
         }
         setCounter(prevCounter => prevCounter - 1);
     }
+
     useEffect(() => {
         const timerId = setInterval(countDown, 1_000);
         return () => clearInterval(timerId);
