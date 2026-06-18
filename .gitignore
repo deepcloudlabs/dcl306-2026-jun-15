@@ -151,3 +151,6 @@ study-js/package-lock.json
 /jwt-backend/.idea
 /jwt-frontend/.idea
 /camera-face-detection-overlay-react/.idea
+/face-matcher-app/.idea
+/face-matcher-app/src/precompute
+/webrtc-video-to-node-udp/.idea
