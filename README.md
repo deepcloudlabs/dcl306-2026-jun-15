@@ -66,7 +66,7 @@ npm start        # or: npm run dev — check the project's package.json
 | `webrtc-node-vanillajs` | WebRTC with a Node.js backend (vanilla JS) |
 | `webrtc-video-to-node-udp` | Streaming WebRTC video to Node.js over UDP |
 
-## Kurulum Bilgisi (Setup — Turkish)
+## Kurulum Bilgisi 
 
 Eğitimde lab çalışmaları için gerekli olan çalışma ortamını kurmak üzere,
 öncelikle aşağıdaki sıkıştırılmış dosyayı makinanıza indiriniz:
